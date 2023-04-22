@@ -37,7 +37,7 @@ Respuesta:
 ```sql
 -- Su respuesta aqui:
 
-SELECT * FROM city WHERE city_id = 1;
+SELECT * FROM city JOIN WHERE city_id = 10;
 
 ```
 
