@@ -37,9 +37,7 @@ Respuesta:
 ```sql
 -- Su respuesta aqui:
 
-SELECT ...
-
-```
+select city.city_id, city.city, count(store.store_id) as cantidad_sucursal from store, address, city where store.address_id = address.address_id and address.city_id = city.city_id group by 1, 2;
 
 2. Listar la cantidad de películas que se hicieron por lenguaje.
 
