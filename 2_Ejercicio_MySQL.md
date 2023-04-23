@@ -57,9 +57,7 @@ Salida:
 
 Respuesta:
 ```sql
--- Su respuesta aqui:
-
-SELECT ...
+select language.language_id, language.name, (select count(*) from film where language.language_id=film.language_id ) film_count from language;
 
 ```
 
