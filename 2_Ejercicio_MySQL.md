@@ -111,7 +111,7 @@ Respuesta:
 ```sql
 -- Su respuesta aqui:
 
-SELECT ...
+select actor.actor_id, actor.first_name, actor.last_name, count(actor.actor_id) as comedy_film_count from film, film_actor, film_category, category, actor where film.film_id = film_actor.film_id and film_actor.actor_id=actor.actor_id and film.film_id=film_category.film_id and film_category.category_id = category.category_id and category.name = "Comedy" group by 1,2,3 order by count(actor.actor_id) desc limit 10;
 
 ```
 
