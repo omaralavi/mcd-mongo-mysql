@@ -39,17 +39,35 @@ db.film.find().limit(10)
 5. Hacemos el map reduce.
 
 ```javascript
-db.film.mapReduce(
-    function map() {
-        // this repreenta al documento
-        emit(this.language_id, 1); // Para cad documento el language_id será el idioma y devolvemos 1 porque es lo que vamos a contar
-    },
-    function reduce(key, values) {
-        return Array.sum(values)
-    },
-    {
-        query: { rating: "R"},
-        out: "language_qtty"
-    }
-);
+// Función map
+var mapFunction = function() {
+  emit(this.language_id, 1);
+};
+
+// Función reduce
+var reduceFunction = function(language_id, counts) {
+  return Array.sum(counts);
+};
+
+// Ejecutar mapReduce
+var mapReduceResults = db.film.mapReduce(
+  mapFunction,
+  reduceFunction,
+  {
+    out: { inline: 1 }
+  }
+)
+
+function updateResultsWithLanguageName(results) {
+  return results.map(function(result) {
+    var language = db.language.findOne({ _id: result._id });
+    return {
+      _id: language.name,
+      count: result.value
+    };
+  });
+}
+
+var finalResults = updateResultsWithLanguageName(mapReduceResults.results);
+printjson(finalResults);
 ```
